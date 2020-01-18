@@ -30,11 +30,24 @@ class AcakNama extends StatefulWidget {
 class _AcakNamaState extends State<AcakNama> {
   @override
   Widget build(BuildContext context) {
-    final nama = WordPair.random();
-    return Container(
-      child: Center(
-        child: Text(nama.asUpperCase),
-      ),
+    final nama = <WordPair>[];
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, i){
+        if(i.isOdd) return Divider();
+
+        final index = i ~/2;
+        if(index >= nama.length){
+          nama.addAll(generateWordPairs().take(10));
+        }
+        return detailList(nama[index]);
+      },
     );
   }
+}
+
+Widget detailList(WordPair detailNama){
+  return ListTile(
+    title: Text(detailNama.asUpperCase, style: TextStyle(fontSize: 20),),
+  );
 }
